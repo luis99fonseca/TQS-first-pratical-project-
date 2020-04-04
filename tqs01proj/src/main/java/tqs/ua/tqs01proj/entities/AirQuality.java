@@ -25,6 +25,12 @@ public class AirQuality {
         this.country = country;
     }
 
+    public AirQuality(String city, String country, String date) {
+        this.city = city;
+        this.country = country;
+        this.date = date;
+    }
+
     // Note: he key in JSON are not exactly the name of properties but in actual those are values of getter
     // methods after omitting the get from the method name. Even if we change the properties in the class but
     // keep the name of getter same we will not see any change in the JSON.

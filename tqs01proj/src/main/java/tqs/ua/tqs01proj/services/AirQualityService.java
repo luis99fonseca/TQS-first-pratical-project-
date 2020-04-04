@@ -52,6 +52,8 @@ public class AirQualityService {
         for (Api01MainResponse.Api01Response.Api01Periods.Api01Pollutant ap: temp_pollutants_list){
             System.out.println(">> "+ ap.getName() + "; " + ap.getValueUGM3());
         }
+//        return new AirQuality(place, "pt", response.getResponse().get(0).getPeriods().get(0).getDateTimeISO());
+
         return airQualityRepository.findByCity(place);
     };
 
