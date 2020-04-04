@@ -3,7 +3,8 @@ package tqs.ua.tqs01proj.utils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-// https://www.baeldung.com/configuration-properties-in-spring-boot
+// https://www.baeldung.com/configuration-properties-in-spring-boot/
+// dizer tbm que é mais correto / recomendado que usar @value -> https://stackoverflow.com/a/32066380
 @Configuration
 @ConfigurationProperties("external-api")
 public class ConfigProperties {
