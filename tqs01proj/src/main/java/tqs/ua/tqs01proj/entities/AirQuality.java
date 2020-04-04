@@ -2,21 +2,19 @@ package tqs.ua.tqs01proj.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
-@Entity
 public class AirQuality {
 
-    @Id
     private String city;
     private String country;
 
     // TODO: mudar para type Date(?)
-    private String date;
+    private LocalDateTime date;
 
-    // TODO: mudar para um outro objeto? Like Period
-    // TODO: try to make it work it https://docs.oracle.com/javaee/6/api/javax/persistence/ElementCollection.html
-//    private Map<String, String> periods;
+    private List<Pollutants> pollutants;
 
     public AirQuality(){}
 
@@ -25,7 +23,7 @@ public class AirQuality {
         this.country = country;
     }
 
-    public AirQuality(String city, String country, String date) {
+    public AirQuality(String city, String country, LocalDateTime date) {
         this.city = city;
         this.country = country;
         this.date = date;
@@ -40,23 +38,21 @@ public class AirQuality {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
 
     public String getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
 
-    public String getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public List<Pollutants> getPollutants() {
+        return pollutants;
     }
 }

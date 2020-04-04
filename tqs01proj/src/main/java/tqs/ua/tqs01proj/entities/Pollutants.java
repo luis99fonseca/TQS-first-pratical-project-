@@ -1,11 +1,16 @@
-package tqs.ua.tqs01proj.apis;
+package tqs.ua.tqs01proj.entities;
 
-public class Api01Pollutantd {
+public class Pollutants {
 
     private String type;
     private String name;
     private float valueUGM3;
-    private String category;
+
+    public Pollutants(String type, String name, float valueUGM3) {
+        this.type = type;
+        this.name = name;
+        this.valueUGM3 = valueUGM3;
+    }
 
     public String getType() {
         return type;
@@ -17,9 +22,5 @@ public class Api01Pollutantd {
 
     public float getValueUGM3() {
         return valueUGM3;
-    }
-
-    public String getCategory() {
-        return category;
     }
 }

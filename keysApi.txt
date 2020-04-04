@@ -1,9 +1,12 @@
-## 1
+## 1 aerisweather
 ### Access ID
 f2R7mvuNdRXW68qkUHEoE
 
 ### Secret Key
 ndZXf4r9HaDb45kl0ap82I9cettgeH9t8LRzNxyT
 
-## 2
+## 2 breezometer
 de6ba8ac858e40a881a94fd8747e93f4
+
+## 3 airvisual
+de701122-0593-4fa3-acdf-e101b4bbc00c

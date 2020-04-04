@@ -5,8 +5,8 @@ import org.springframework.stereotype.Repository;
 import tqs.ua.tqs01proj.entities.AirQuality;
 
 // https://howtodoinjava.com/spring-boot2/h2-database-example/
-@Repository
-public interface AirQualityRepository extends JpaRepository<AirQuality, String> {
-
-    public AirQuality findByCity(String name);
-}
+//@Repository
+//public interface AirQualityRepository extends JpaRepository<AirQuality, String> {
+//
+//    public AirQuality findByCity(String name);
+//}

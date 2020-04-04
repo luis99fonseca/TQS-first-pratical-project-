@@ -20,6 +20,10 @@ public class Api01MainResponse {
         return response;
     }
 
+    public List<Api01MainResponse.Api01Response.Api01Periods.Api01Pollutant> getAllPollutants(){
+        return this.response.get(0).getPeriods().get(0).getPollutants();
+    }
+
     public static class Api01Response {
 
         private String id;
