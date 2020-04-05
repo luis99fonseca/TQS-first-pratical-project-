@@ -7,10 +7,11 @@ import java.util.List;
 // TODO: por atributos privados :) ou tirar os Getters, pa ficar more POJO like? embora conflita pk precisamos de algumas funçoes especificas e preciamso
 public class Api02MainResponse {
 
-    public String error;
+    // TODO: probably Error must be a class on its own
+    public Api02Error error;
     public Api02Data data;
 
-    public String getError() {
+    public Api02Error getError() {
         return error;
     }
 
@@ -80,6 +81,22 @@ public class Api02MainResponse {
         }
     }
 
+    public static class Api02Error {
+        private String code;
+        private String title;
+        private String detail;
 
+        public String getCode() {
+            return code;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getDetail() {
+            return detail;
+        }
+    }
 
 }

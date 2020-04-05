@@ -5,14 +5,14 @@ import java.util.List;
 public class Api01MainResponse {
 
     private String success;
-    private String error;
+    private Api01Error error;
     private List<Api01Response> response;
 
     public String getSuccess() {
         return success;
     }
 
-    public String getError() {
+    public Api01Error getError() {
         return error;
     }
 
@@ -78,6 +78,19 @@ public class Api01MainResponse {
                     return category;
                 }
             }
+        }
+    }
+
+    public static class Api01Error {
+        private String code;
+        private String description;
+
+        public String getCode() {
+            return code;
+        }
+
+        public String getDescription() {
+            return description;
         }
     }
 }
