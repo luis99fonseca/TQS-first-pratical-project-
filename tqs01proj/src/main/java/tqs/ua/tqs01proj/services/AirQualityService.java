@@ -66,7 +66,6 @@ public class AirQualityService {
 
         // If API01 request works, use it
         for (Api01MainResponse.Api01Response.Api01Periods.Api01Pollutant p: response01.getAllPollutants()){
-            System.out.println(">> "+ p.getName() + "; " + p.getValueUGM3());
             pollutantList.add( new Pollutant(p.getType(), p.getName(), p.getValueUGM3() ));
         }
         return new AirQuality(place, "portugal", LocalDateTime.parse(response01.getApi01Date().split("\\+")[0])  ,pollutantList);
