@@ -1,12 +1,12 @@
 package tqs.ua.tqs01proj.entities;
 
-public class Pollutants {
+public class Pollutant {
 
     private String type;
     private String name;
     private float valueUGM3;
 
-    public Pollutants(String type, String name, float valueUGM3) {
+    public Pollutant(String type, String name, float valueUGM3) {
         this.type = type;
         this.name = name;
         this.valueUGM3 = valueUGM3;

@@ -19,6 +19,10 @@ public class Api02MainResponse {
         return data;
     }
 
+    public List<Api02Data.Api02Pollutants.Api02Pollutant> getAllPollutants(){
+        return getData().getPollutants().getListPollutants();
+    }
+
     public static class Api02Data {
         public String datetime;
         public Api02Pollutants pollutants;
@@ -66,10 +70,10 @@ public class Api02MainResponse {
                 }
 
                 public static class Api02Concentration {
-                    public String value;
+                    public float value;
                     public String units;
 
-                    public String getValue() {
+                    public float getValue() {
                         return value;
                     }
 

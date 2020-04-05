@@ -24,6 +24,10 @@ public class Api01MainResponse {
         return this.response.get(0).getPeriods().get(0).getPollutants();
     }
 
+    public String getApi01Date(){
+        return this.response.get(0).getPeriods().get(0).getDateTimeISO();
+    }
+
     public static class Api01Response {
 
         private String id;

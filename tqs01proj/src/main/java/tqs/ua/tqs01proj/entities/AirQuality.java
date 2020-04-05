@@ -1,32 +1,31 @@
 package tqs.ua.tqs01proj.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 public class AirQuality {
 
     private String city;
     private String country;
 
-    // TODO: mudar para type Date(?)
     private LocalDateTime date;
 
-    private List<Pollutants> pollutants;
+    private List<Pollutant> pollutants;
 
     public AirQuality(){}
 
+    // TODO: tirar depois dos tests
     public AirQuality(String city, String country) {
         this.city = city;
         this.country = country;
+
     }
 
-    public AirQuality(String city, String country, LocalDateTime date) {
+    public AirQuality(String city, String country, LocalDateTime date, List<Pollutant> pollutants) {
         this.city = city;
         this.country = country;
         this.date = date;
+        this.pollutants = pollutants;
     }
 
     // Note: he key in JSON are not exactly the name of properties but in actual those are values of getter
@@ -52,7 +51,7 @@ public class AirQuality {
         this.date = date;
     }
 
-    public List<Pollutants> getPollutants() {
+    public List<Pollutant> getPollutants() {
         return pollutants;
     }
 }
