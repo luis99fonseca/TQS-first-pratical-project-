@@ -1,4 +1,4 @@
-package tqs.ua.tqs01proj.apis;
+package tqs.ua.tqs01proj.utils;
 
 import java.util.List;
 

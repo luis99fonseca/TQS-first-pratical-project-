@@ -1,11 +1,13 @@
 package tqs.ua.tqs01proj.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import tqs.ua.tqs01proj.apis.Api02MainResponse;
+import reactor.core.publisher.Mono;
+import tqs.ua.tqs01proj.utils.Api02MainResponse;
 import tqs.ua.tqs01proj.entities.AirQuality;
-import tqs.ua.tqs01proj.apis.Api01MainResponse;
+import tqs.ua.tqs01proj.utils.Api01MainResponse;
 //import tqs.ua.tqs01proj.repos.AirQualityRepository;
 import tqs.ua.tqs01proj.repos.AirQualityRepository2;
 import tqs.ua.tqs01proj.utils.ConfigProperties;
@@ -38,22 +40,22 @@ public class AirQualityService {
 
         if (response01.getError() != null){
             System.out.println("Couldn't get data from API01. Cause: " + response01.getError().getDescription());
-            response02 = getFromApuTwo(place);
+            response02 = getFromApiTwo(place);
         }
 
         if (response02.getError() != null){
             System.out.println("Couldn't get data from API02. Cause: " + response02.getError().getDetail());
         }
 
-        for (Api02MainResponse.Api02Data.Api02Pollutants.Api02Pollutant p : response02.getData().getPollutants().getListPollutants()){
-            System.out.println("<<< " + p.full_name + "; " + p.concentration.value);
-        }
-
-        for (Api01MainResponse.Api01Response.Api01Periods.Api01Pollutant ap: response01.getAllPollutants()){
-            System.out.println(">> "+ ap.getName() + "; " + ap.getValueUGM3());
-        }                                                                           // TODO: por funçao na class pa dizer a data
-        return new AirQuality(place, "pt", LocalDateTime.parse( response01.getResponse().get(0).getPeriods().get(0).getDateTimeISO().split("\\+")[0] ));
-
+//        for (Api02MainResponse.Api02Data.Api02Pollutants.Api02Pollutant p : response02.getData().getPollutants().getListPollutants()){
+//            System.out.println("<<< " + p.full_name + "; " + p.concentration.value);
+//        }
+//
+//        for (Api01MainResponse.Api01Response.Api01Periods.Api01Pollutant ap: response01.getAllPollutants()){
+//            System.out.println(">> "+ ap.getName() + "; " + ap.getValueUGM3());
+//        }                                                                           // TODO: por funçao na class pa dizer a data
+//        return new AirQuality(place, "pt", LocalDateTime.parse( response01.getResponse().get(0).getPeriods().get(0).getDateTimeISO().split("\\+")[0] ));
+        return new AirQuality("viseu", "pt");
 //        return airQualityRepository.findByCity(place);
     };
 
@@ -75,15 +77,13 @@ public class AirQualityService {
                             .build()
                     )
                     .retrieve()
+                    .onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.empty())
                     .bodyToMono(Api01MainResponse.class)
                     .block();
-
-
     }
 
-    private Api02MainResponse getFromApuTwo(String city){
-        // TODO: por dados na condifProperties
-        try {
+    private Api02MainResponse getFromApiTwo(String city){
+            // https://stackoverflow.com/questions/59090105/webclient-block-is-throwing-nullpointerexception
             return webClientBuilder
                     .baseUrl(configProperties.getUrl02())
                     .build()
@@ -97,12 +97,9 @@ public class AirQualityService {
                             .build()
                     )
                     .retrieve()
+                    .onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.empty())
                     .bodyToMono(Api02MainResponse.class)
                     .block();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
 }
