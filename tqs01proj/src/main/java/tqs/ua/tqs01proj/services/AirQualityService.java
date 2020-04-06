@@ -49,6 +49,7 @@ public class AirQualityService {
             System.out.println("Couldn't get data from API01. Cause: " + response01.getError().getDescription());
             response02 = getFromApiTwo(place);
 
+            // TODO: converter pa upg3 https://www2.dmu.dk/AtmosphericEnvironment/Expost/database/docs/PPM_conversion.pdf
             if (response02.getError() != null){
                 System.out.println("Couldn't get data from API02. Cause: " + response02.getError().getDetail());
 
