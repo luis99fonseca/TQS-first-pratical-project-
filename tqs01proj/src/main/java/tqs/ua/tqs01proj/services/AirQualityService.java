@@ -9,8 +9,7 @@ import tqs.ua.tqs01proj.entities.Pollutant;
 import tqs.ua.tqs01proj.utils.Api02MainResponse;
 import tqs.ua.tqs01proj.entities.AirQuality;
 import tqs.ua.tqs01proj.utils.Api01MainResponse;
-//import tqs.ua.tqs01proj.repos.AirQualityRepository;
-import tqs.ua.tqs01proj.repos.AirQualityRepository2;
+import tqs.ua.tqs01proj.repos.AirQualityRepository;
 import tqs.ua.tqs01proj.utils.ConfigProperties;
 
 import java.time.LocalDateTime;
@@ -22,7 +21,7 @@ import java.util.List;
 public class AirQualityService {
 
     @Autowired
-    private AirQualityRepository2 airQualityRepository;
+    private AirQualityRepository airQualityRepository;
 
     @Autowired
     private ConfigProperties configProperties;
@@ -31,7 +30,7 @@ public class AirQualityService {
     private WebClient.Builder webClientBuilder;
 
     public AirQuality getAirQuality(String place){
-        System.out.println("[GET] for " + place + "; " + configProperties.getId01());
+//        System.out.println("[GET] for " + place + "; " + configProperties.getId01());
         // TODO: (tirar daqui, e possibly meter as singleton como no video do gajo;) plus isto muda os testes... bue
         //      https://www.baeldung.com/spring-5-webclient
         //      https://springframework.guru/spring-5-webclient/ -> testam os endpoints

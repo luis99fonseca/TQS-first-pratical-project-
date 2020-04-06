@@ -10,13 +10,18 @@
 //import org.springframework.context.annotation.Bean;
 //import tqs.ua.tqs01proj.entities.AirQuality;
 //import tqs.ua.tqs01proj.entities.AirQualityNull;
-//import tqs.ua.tqs01proj.repos.AirQualityRepository;
 //
 ////import static org.junit.jupiter.api.Assertions.*;
 //
 //import static org.mockito.BDDMockito.given;
 //import static org.mockito.BDDMockito.willReturn;
 //import org.assertj.core.api.Assertions;
+//import tqs.ua.tqs01proj.repos.AirQualityRepository;
+//
+//import java.time.LocalDateTime;
+//import java.util.Collections;
+//
+//// https://stackoverflow.com/questions/40961057/how-to-use-mockito-with-junit5
 //@ExtendWith(MockitoExtension.class)
 //class AirQualityServiceTest {
 //
@@ -30,7 +35,7 @@
 //    @Test
 //    public void getAirQDetails_thenReturnsAirQInfo(){
 //        given( airQualityRepository.findByCity("viseu") ).
-//            willReturn(new AirQuality("viseu", "portugal"));
+//            willReturn(new AirQuality("viseu", "portugal", LocalDateTime.now(), Collections.emptyList() ));
 //        AirQuality temp_airQuality = surAirQualityService.getAirQuality("viseu");
 //        Assertions.assertThat( temp_airQuality.getCity()).isEqualTo("viseu") ;
 //    }

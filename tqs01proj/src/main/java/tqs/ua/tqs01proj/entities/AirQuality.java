@@ -14,13 +14,6 @@ public class AirQuality {
 
     public AirQuality(){}
 
-    // TODO: tirar depois dos tests
-    public AirQuality(String city, String country) {
-        this.city = city;
-        this.country = country;
-
-    }
-
     public AirQuality(String city, String country, LocalDateTime date, List<Pollutant> pollutants) {
         this.city = city;
         this.country = country;
