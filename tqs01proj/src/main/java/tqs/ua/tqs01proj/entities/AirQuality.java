@@ -1,28 +1,31 @@
 package tqs.ua.tqs01proj.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.List;
 
-@Entity
 public class AirQuality {
 
-    @Id
     private String city;
     private String country;
 
-    // TODO: mudar para type Date(?)
-    private String date;
+    private LocalDateTime date;
 
-    // TODO: mudar para um outro objeto? Like Period
-    // TODO: try to make it work it https://docs.oracle.com/javaee/6/api/javax/persistence/ElementCollection.html
-//    private Map<String, String> periods;
+    private List<Pollutant> pollutants;
 
     public AirQuality(){}
 
+    // TODO: tirar depois dos tests
     public AirQuality(String city, String country) {
         this.city = city;
         this.country = country;
+
+    }
+
+    public AirQuality(String city, String country, LocalDateTime date, List<Pollutant> pollutants) {
+        this.city = city;
+        this.country = country;
+        this.date = date;
+        this.pollutants = pollutants;
     }
 
     // Note: he key in JSON are not exactly the name of properties but in actual those are values of getter
@@ -34,23 +37,21 @@ public class AirQuality {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
 
     public String getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
 
-    public String getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public List<Pollutant> getPollutants() {
+        return pollutants;
     }
 }

@@ -1,23 +1,31 @@
-package tqs.ua.tqs01proj.apis;
+package tqs.ua.tqs01proj.utils;
 
 import java.util.List;
 
 public class Api01MainResponse {
 
     private String success;
-    private String error;
+    private Api01Error error;
     private List<Api01Response> response;
 
     public String getSuccess() {
         return success;
     }
 
-    public String getError() {
+    public Api01Error getError() {
         return error;
     }
 
     public List<Api01Response> getResponse() {
         return response;
+    }
+
+    public List<Api01MainResponse.Api01Response.Api01Periods.Api01Pollutant> getAllPollutants(){
+        return this.response.get(0).getPeriods().get(0).getPollutants();
+    }
+
+    public String getApi01Date(){
+        return this.response.get(0).getPeriods().get(0).getDateTimeISO();
     }
 
     public static class Api01Response {
@@ -74,6 +82,19 @@ public class Api01MainResponse {
                     return category;
                 }
             }
+        }
+    }
+
+    public static class Api01Error {
+        private String code;
+        private String description;
+
+        public String getCode() {
+            return code;
+        }
+
+        public String getDescription() {
+            return description;
         }
     }
 }
