@@ -43,6 +43,7 @@ class AirQualityControllerTest {
 
     }
 
+    // TODO: decidir what do here.. tem de tar de acorod com o de sevice
     @Test
     public void whenGetAirQByInexistingCity_thenReturnAirQ() throws Exception {
         String non_existing_city = "no_city";

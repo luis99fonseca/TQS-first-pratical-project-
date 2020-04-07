@@ -39,6 +39,12 @@ class AirQualityServiceTest {
     @Mock
     private ExternalCaller externalCaller;
 
+    @Mock
+    private Api01MainResponse api01MainResponse;
+
+    @Mock
+    private Api02MainResponse api02MainResponse;
+
     @Test
     public void givenAQinRepository_whenAirQDetails_thenReturnsAirQInfo(){
         // TODO: check https://stackoverflow.com/questions/38567326/is-it-discouraged-to-use-spy-and-injectmocks-on-the-same-field
@@ -48,25 +54,56 @@ class AirQualityServiceTest {
         given( airQualityRepository.findByCityName("viseu") ).
             willReturn(new AirQuality("viseu", "portugal", LocalDateTime.now(), Collections.emptyList() ));
 
-//        Api01MainResponse.Api01Error temp_error01 = new Api01MainResponse.Api01Error();
-//        Api01MainResponse temp_main01 = new Api01MainResponse();
-//        temp_main01.setError(temp_error01);
-//        given( externalCaller.getFromApiOne( anyString() )  )
-//                .willReturn( temp_main01 );
-//
-//        Api02MainResponse.Api02Error temp_error02 = new Api02MainResponse.Api02Error();
-//        Api02MainResponse temp_main02 = new Api02MainResponse();
-//        temp_main02.setError(temp_error02);
-//
-//        given( externalCaller.getFromApiTwo( anyString() )  )
-//                .willReturn( temp_main02 );
-
         AirQuality temp_airQuality = surAirQualityService.getAirQuality("viseu");
         Assertions.assertThat( temp_airQuality.getCity()).isEqualTo("viseu") ;
     }
 
+    @Test
+    public void givenAQinApi01_whenAirQDetails_thenReturnsAirQInfo(){
+        given( airQualityRepository.findByCityName("viseu") ).
+                willReturn( null );
+
+        api01MainResponse.setError(null);
+        given( externalCaller.getFromApiOne( anyString() )  )
+                .willReturn( api01MainResponse );
+
+        given( api01MainResponse.getApi01Date())
+                .willReturn("2020-04-07T02:00:00+01:00");
+
+
+        AirQuality temp_airQuality = surAirQualityService.getAirQuality("viseu");
+        Assertions.assertThat( temp_airQuality.getCity()).isEqualTo("viseu") ;
+        // TODO: isto faz aprse automatico, dizer que p JUnit aparently trata disso
+        Assertions.assertThat( temp_airQuality.getDate()).isEqualTo("2020-04-07T02:00:00");
+    }
+
+    @Test
+    public void givenAQinApi02_whenAirQDetails_thenReturnsAirQInfo(){
+        given( airQualityRepository.findByCityName("viseu") ).
+                willReturn( null );
+
+        Api01MainResponse.Api01Error temp_error01 = new Api01MainResponse.Api01Error();
+        Api01MainResponse temp_main01 = new Api01MainResponse();
+        temp_main01.setError(temp_error01);
+        given( externalCaller.getFromApiOne( anyString() )  )
+                .willReturn( temp_main01 );
+
+        api02MainResponse.setError(null);
+
+        given( externalCaller.getFromApiTwo( anyString() )  )
+                .willReturn( api02MainResponse );
+
+        given( api02MainResponse.getApi02Date())
+                .willReturn("2020-04-04T14:00:00Z");
+
+        AirQuality temp_airQuality = surAirQualityService.getAirQuality("viseu");
+        Assertions.assertThat( temp_airQuality.getCity()).isEqualTo("viseu") ;
+        Assertions.assertThat( temp_airQuality.getDate() ).isEqualTo("2020-04-04T14:00:00");
+    }
+
     // TODO: ver se em vez de Exception, se é Null Object
     // TODO: also na pratica nao usa este objeto at all...
+    //
     @Test
     public void getAirQDetails_whenDoesntExist_returnsException(){
         String non_existing_city = "no_city";

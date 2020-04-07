@@ -27,6 +27,10 @@ public class Api02MainResponse {
         return getData().getPollutants().getListPollutants();
     }
 
+    public String getApi02Date(){
+        return "";
+    }
+
     public static class Api02Data {
         public String datetime;
         public Api02Pollutants pollutants;

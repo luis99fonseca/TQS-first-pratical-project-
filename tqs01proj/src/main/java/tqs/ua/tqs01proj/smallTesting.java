@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class testingShit {
+public class smallTesting {
     public static void main(String[] args) {
         System.out.println("ola");
         LocalDateTime d1 = LocalDateTime.parse("2019-04-28T22:32:38.536");

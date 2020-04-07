@@ -61,7 +61,7 @@ public class AirQualityService {
             for (Api02MainResponse.Api02Data.Api02Pollutants.Api02Pollutant p : response02.getAllPollutants()){
                 pollutantList.add( new Pollutant(p.getDisplay_name().toLowerCase(), p.getFull_name().toLowerCase(), p.getConcentration().getValue() ) );
             }
-            working_aq = new AirQuality(place, "portugal", LocalDateTime.parse(response02.getData().getDatetime().split("Z")[0] ) ,pollutantList);
+            working_aq = new AirQuality(place, "portugal", LocalDateTime.parse(response02.getApi02Date().split("Z")[0] ) ,pollutantList);
             airQualityRepository.save(working_aq);
             return working_aq;
         }
