@@ -101,6 +101,28 @@ class AirQualityServiceTest {
         Assertions.assertThat( temp_airQuality.getDate() ).isEqualTo("2020-04-04T14:00:00");
     }
 
+    @Test
+    public void givenAQnotIn_whenAirQDetails_thenReturnsNullObject(){
+        given( airQualityRepository.findByCityName("viseu") ).
+                willReturn( null );
+
+        Api01MainResponse.Api01Error temp_error01 = new Api01MainResponse.Api01Error();
+        Api01MainResponse temp_main01 = new Api01MainResponse();
+        temp_main01.setError(temp_error01);
+        given( externalCaller.getFromApiOne( anyString() )  )
+                .willReturn( temp_main01 );
+
+        Api02MainResponse.Api02Error temp_error02 = new Api02MainResponse.Api02Error();
+        Api02MainResponse temp_main02 = new Api02MainResponse();
+        temp_main02.setError(temp_error02);
+        given( externalCaller.getFromApiTwo( anyString() )  )
+                .willReturn( temp_main02 );
+
+
+        AirQuality temp_airQuality = surAirQualityService.getAirQuality("viseu");
+        Assertions.assertThat( temp_airQuality.getCity()).isEqualTo("unavailable") ;
+    }
+
     // TODO: ver se em vez de Exception, se é Null Object
     // TODO: also na pratica nao usa este objeto at all...
     //
