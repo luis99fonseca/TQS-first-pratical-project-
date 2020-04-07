@@ -123,8 +123,34 @@ class AirQualityServiceTest {
         Assertions.assertThat( temp_airQuality.getCity()).isEqualTo("unavailable") ;
     }
 
+    // TODO: Dizer que se tentou dar override no system time mas not worth it. Embora s e sinta que testes como este
+    //  nao sejam otimos .now() assim aqui, neste contexto serve para dar o timetravvel desejado
+    //https://www.baeldung.com/java-override-system-time
+    @Test
+    public void givenAQInRepository_butOutdated_thenRequestNew(){
+        AirQuality outdate_aq = new AirQuality("viseu", "portugal",
+                LocalDateTime.now().plusMinutes(-50), Collections.emptyList());
+
+        given( airQualityRepository.findByCityName("viseu") ).willReturn(
+                outdate_aq
+        );
+
+        api01MainResponse.setError(null);
+        given( externalCaller.getFromApiOne( anyString() )  )
+                .willReturn( api01MainResponse );
+
+        given( api01MainResponse.getApi01Date())
+                .willReturn("2020-04-07T02:00:00+01:00");
+
+        AirQuality temp_airQuality = surAirQualityService.getAirQuality("viseu");
+        Assertions.assertThat( temp_airQuality.getDate()).isEqualTo("2020-04-07T02:00:00");
+
+
+    }
+
+
     // TODO: ver se em vez de Exception, se é Null Object
-    // TODO: also na pratica nao usa este objeto at all...
+    // TODO: also na pratica nao usa este objeto at all... acho que em cima ja faço isso
     //
     @Test
     public void getAirQDetails_whenDoesntExist_returnsException(){

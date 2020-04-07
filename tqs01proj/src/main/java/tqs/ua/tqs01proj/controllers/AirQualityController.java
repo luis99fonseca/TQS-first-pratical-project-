@@ -3,6 +3,7 @@ package tqs.ua.tqs01proj.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import tqs.ua.tqs01proj.entities.AirQuality;
 import tqs.ua.tqs01proj.services.AirQualityService;
@@ -23,6 +24,15 @@ public class AirQualityController {
         return airQualityService.getAirQuality(city);
     }
 
+    @RequestMapping("/index")
+    private String frontPage(Model model){
+        String nome = "luis";
+        model.addAttribute("messagem", nome);
+        return "index";
+    }
+
+    // TODO: por to get stats do Rep
+
     // TODO: remove later, for testing only
     // TODO: por try catch, pa enviar HttpStatus.ERROR ors someshit
     @PostMapping("/airquality")
@@ -31,4 +41,6 @@ public class AirQualityController {
         AirQuality saved = airQualityService.save(airQuality);
         return new ResponseEntity<>(saved, httpStatus);
     }
+
+
 }

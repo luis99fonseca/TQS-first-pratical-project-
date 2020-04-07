@@ -3,7 +3,10 @@ package tqs.ua.tqs01proj;
 
 import tqs.ua.tqs01proj.entities.AirQuality;
 
+import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +38,12 @@ public class smallTesting {
 
         ola.remove(new AirQuality("aq1", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
         System.out.println(ola);
+
+        String instantatual = "2014-12-22T10:15:30Z";
+        Clock clock = Clock.fixed(Instant.parse(instantatual), ZoneId.of("UTC"));
+        LocalDateTime d6 = LocalDateTime.now().plusMinutes(-50);
+        System.out.println(">> " + d6);
+        System.out.println(">>> " + Instant.now(clock));
 
     }
 }

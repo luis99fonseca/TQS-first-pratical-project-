@@ -85,5 +85,4 @@ class AirQualityRepositoryTest {
         Assertions.assertThat(from_rep.getCountry()).isEqualTo("spain");
     }
 
-
 }
