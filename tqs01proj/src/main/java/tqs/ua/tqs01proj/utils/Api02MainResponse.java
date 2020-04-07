@@ -15,6 +15,10 @@ public class Api02MainResponse {
         return error;
     }
 
+    public void setError( Api02Error api02Error){
+        this.error = api02Error;
+    }
+
     public Api02Data getData() {
         return data;
     }

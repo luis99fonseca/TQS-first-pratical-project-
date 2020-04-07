@@ -26,6 +26,9 @@ public class AirQualityRepository {
     }
 
     public AirQuality save(AirQuality airQuality){
+        // if a AQ of this name is already there, it is removed, else nothing happens
+        this.table.remove(checkByCityName(airQuality.getCity()));
+
         if (this.table.size() == this.MAXSIZE){
             removeOldest();
         }
@@ -33,7 +36,7 @@ public class AirQualityRepository {
         return airQuality;
     }
 
-    public AirQuality findByCity(String city){
+    public AirQuality findByCityName(String city){
         for (AirQuality aq : this.table){
             if (aq.getCity().equals(city)){
                 return aq;
@@ -60,6 +63,15 @@ public class AirQualityRepository {
             }
         }
         return this.table.remove(temp_airquality);
+    }
+
+    private AirQuality checkByCityName(String city_name){
+        for (AirQuality aq : this.table){
+            if (aq.getCity().equals(city_name)){
+                return aq;
+            }
+        }
+        return null;
     }
 
 }

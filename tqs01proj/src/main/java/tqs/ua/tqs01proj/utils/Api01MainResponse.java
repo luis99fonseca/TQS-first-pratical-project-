@@ -16,6 +16,10 @@ public class Api01MainResponse {
         return error;
     }
 
+    public void setError( Api01Error api01Error){
+        this.error = api01Error;
+    }
+
     public List<Api01Response> getResponse() {
         return response;
     }

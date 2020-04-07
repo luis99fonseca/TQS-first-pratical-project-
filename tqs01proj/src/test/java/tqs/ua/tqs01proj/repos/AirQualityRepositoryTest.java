@@ -8,6 +8,9 @@ import tqs.ua.tqs01proj.entities.AirQuality;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
+// TODO: diz que muitas alteraçoes teriam de ser feitas pa isto dar pa mais do k cities de portugal: comparaçao soa so
+//  com city name e testes tbm por consequcnaia. Isto dar pa ver que muitas vezes somos negligentes e n pensamos como
+//  escalar shit
 
 // https://reflectoring.io/unit-testing-spring-boot/#dont-use-spring-in-unit-tests
 class AirQualityRepositoryTest {
@@ -23,14 +26,14 @@ class AirQualityRepositoryTest {
     public void whenFindByCity_thenReturnAQuality(){
         AirQuality saved_airQuality = airQualityRepository.save(new AirQuality("aveiro", "portugal", LocalDateTime.now(), Collections.emptyList() ));
 
-        AirQuality temp_airQuality = airQualityRepository.findByCity("aveiro");
+        AirQuality temp_airQuality = airQualityRepository.findByCityName("aveiro");
 
         Assertions.assertThat( temp_airQuality.getCity()).isEqualTo(saved_airQuality.getCity());
     }
 
     @Test
     public void whenInvalidCity_thenReturnNull(){
-        AirQuality no_existant = airQualityRepository.findByCity("doesNotExist");
+        AirQuality no_existant = airQualityRepository.findByCityName("doesNotExist");
         Assertions.assertThat(no_existant).isNull();
     }
 
@@ -43,13 +46,13 @@ class AirQualityRepositoryTest {
         airQualityRepository.save(new AirQuality("aq5", "portugal",  LocalDateTime.parse("2015-04-28T22:32:38.536"), Collections.emptyList() ));
         airQualityRepository.save(new AirQuality("aq6", "portugal",  LocalDateTime.parse("2015-04-28T22:32:38.536"), Collections.emptyList() ));
 
-        AirQuality no_existant = airQualityRepository.findByCity("aq2");
+        AirQuality no_existant = airQualityRepository.findByCityName("aq2");
         Assertions.assertThat(no_existant).isNull();
 
-        AirQuality from_rep = airQualityRepository.findByCity("aq6");
+        AirQuality from_rep = airQualityRepository.findByCityName("aq6");
         Assertions.assertThat(from_rep).isNotNull();
 
-        from_rep = airQualityRepository.findByCity("aq1");
+        from_rep = airQualityRepository.findByCityName("aq1");
         Assertions.assertThat(from_rep).isNotNull();
     }
 
@@ -59,16 +62,28 @@ class AirQualityRepositoryTest {
         AirQuality aq1 = airQualityRepository.save(new AirQuality(city_name, "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
         airQualityRepository.removeByCityName(city_name);
 
-        AirQuality removed_aq = airQualityRepository.findByCity(city_name);
+        AirQuality removed_aq = airQualityRepository.findByCityName(city_name);
         Assertions.assertThat(removed_aq).isNull();
     }
 
     @Test
     public void givenRepositoryIsEmpty_returnsNull(){
-        AirQuality removed_aq = airQualityRepository.findByCity( anyString() );
+        // Note: não se usa anyString() no teste itself
+        AirQuality removed_aq = airQualityRepository.findByCityName( "anyString()" );
         Assertions.assertThat(removed_aq).isNull();
     }
 
+    @Test
+    public void whenAddSameNameCity_removeOlder(){
+        airQualityRepository.save(new AirQuality("aq1", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
+
+        AirQuality from_rep = airQualityRepository.findByCityName("aq1");
+        Assertions.assertThat(from_rep.getCountry()).isEqualTo("portugal");
+
+        airQualityRepository.save(new AirQuality("aq1", "spain",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
+        from_rep = airQualityRepository.findByCityName("aq1");
+        Assertions.assertThat(from_rep.getCountry()).isEqualTo("spain");
+    }
 
 
 }

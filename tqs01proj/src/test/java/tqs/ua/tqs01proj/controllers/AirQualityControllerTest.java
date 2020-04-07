@@ -8,13 +8,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import tqs.ua.tqs01proj.entities.AirQuality;
 import tqs.ua.tqs01proj.entities.AirQualityNull;
-import tqs.ua.tqs01proj.entities.Pollutant;
 import tqs.ua.tqs01proj.services.AirQualityService;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
