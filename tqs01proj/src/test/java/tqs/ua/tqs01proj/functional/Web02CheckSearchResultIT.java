@@ -44,7 +44,7 @@ public class Web02CheckSearchResultIT {
     driver.findElement(By.xpath("//div/h4")).click();
     Assertions.assertThat(driver.findElement(By.xpath("//div/h4")).getText()).contains("for the city of viseu");
 //    assertEquals("Taken at: 2020-04-08T16:00, for the city of viseu", driver.findElement(By.xpath("//div/h4")).getText());
-    System.out.println(">> " + driver.findElement(By.xpath("//div/h4")).getText());
+//    System.out.println(">> " + driver.findElement(By.xpath("//div/h4")).getText());
 
   }
 
