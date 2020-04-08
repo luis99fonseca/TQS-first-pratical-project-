@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -34,7 +35,10 @@ public class Web01CheckNoSearchYetIT {
 
     @BeforeEach
     public void setUp() throws Exception {
-        driver = new ChromeDriver();
+        ChromeOptions opt = new ChromeOptions();
+        opt.setHeadless(true);
+        driver = new ChromeDriver(opt);
+
         baseUrl = "https://www.google.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
