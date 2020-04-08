@@ -1,0 +1,27 @@
+# https://help.github.com/pt/actions/reference/events-that-trigger-workflows#
+# https://crontab.guru/
+
+name: Java CI with Maven for IT
+
+on:
+  schedule:
+    - cron: '15 * * * *'
+  push:
+    branches: [ master , noRepository]
+  pull_request:
+    branches: [ master , noRepository]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Build with Maven
+      run: cd tqs01proj/ && mvn package failsafe:integration-test
+
