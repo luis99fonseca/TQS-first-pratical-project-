@@ -25,7 +25,9 @@ public class AirQualityService {
     private ExternalCaller externalCaller;
 
 
-    public AirQuality getAirQuality(String place){
+    public AirQuality getAirQuality(String city_name){
+        // Can't be done at the Controller, for some reason
+        String place = city_name.toLowerCase();
         // TODO: (tirar daqui, e possibly meter as singleton como no video do gajo;) plus isto muda os testes... bue
         //      https://www.baeldung.com/spring-5-webclient
         //      https://springframework.guru/spring-5-webclient/ -> testam os endpoints
@@ -76,10 +78,7 @@ public class AirQualityService {
         return working_aq;
     };
 
-    public AirQuality save(AirQuality airQuality) {
-        return airQualityRepository.save(airQuality);
+    public List<Integer> getStats() {
+        return airQualityRepository.getStats();
     }
-
-
-
 }

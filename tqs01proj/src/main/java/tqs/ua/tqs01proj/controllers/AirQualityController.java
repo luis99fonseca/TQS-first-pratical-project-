@@ -11,6 +11,7 @@ import tqs.ua.tqs01proj.services.AirQualityService;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class AirQualityController {
@@ -28,7 +29,13 @@ public class AirQualityController {
     private AirQuality getAirQuality(@PathVariable String city){
 
 //        return new AirQuality("cepoes", "portugal");
-        return airQualityService.getAirQuality(city.toLowerCase());
+        return airQualityService.getAirQuality(city);
+    }
+
+    @GetMapping("/airquality/stats")
+    @ResponseBody
+    private List<Integer> getCacheStats(){
+        return airQualityService.getStats();
     }
 
     @RequestMapping("/index")
@@ -45,19 +52,5 @@ public class AirQualityController {
         model.addAttribute("pollutants", airQuality.getPollutants() );
         return "index";
     }
-
-
-
-    // TODO: por to get stats do Rep
-
-    // TODO: remove later, for testing only
-    // TODO: por try catch, pa enviar HttpStatus.ERROR ors someshit
-    @PostMapping("/airquality")
-    private ResponseEntity<AirQuality> CreateAirQuality(@RequestBody AirQuality airQuality){
-        HttpStatus httpStatus = HttpStatus.CREATED;
-        AirQuality saved = airQualityService.save(airQuality);
-        return new ResponseEntity<>(saved, httpStatus);
-    }
-
 
 }

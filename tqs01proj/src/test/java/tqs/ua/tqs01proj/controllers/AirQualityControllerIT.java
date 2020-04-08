@@ -11,8 +11,11 @@ import tqs.ua.tqs01proj.entities.AirQualityNull;
 import tqs.ua.tqs01proj.services.AirQualityService;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -21,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.junit.jupiter.api.Assertions.*;
 
 @WebMvcTest(AirQualityController.class)
-class AirQualityControllerTest {
+class AirQualityControllerIT {
 
     @Autowired
     MockMvc servlet;
@@ -31,7 +34,6 @@ class AirQualityControllerTest {
 
     @Test
     public void whenGetAirQByCity_thenReturnAirQ() throws Exception {
-        // TODO: ver se deixo AQ assim, ou tem de ser os os args todos... to keep it simple or _complete_
         given( airQualityService.getAirQuality( anyString()) ).willReturn(
                 new AirQuality("viseu", "portugal", LocalDateTime.now(), Collections.emptyList() )
         );
@@ -40,7 +42,6 @@ class AirQualityControllerTest {
                 andExpect(status().isOk()).
                 andExpect(jsonPath("city").value("viseu"))
         ;
-
     }
 
     // TODO: decidir what do here.. tem de tar de acorod com o de sevice
@@ -57,6 +58,17 @@ class AirQualityControllerTest {
                 // TODO: ver se meto a ver que city é null :L
                 //.andExpect(jsonPath("city").value("viseu"))
         ;
+    }
+
+    @Test
+    public void whenGetStats_thenReturnStats() throws Exception {
+        given (airQualityService.getStats()).willReturn(
+                Collections.emptyList()
+        );
+
+        servlet.perform(MockMvcRequestBuilders.get("/airquality/stats"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray());
     }
 
 }

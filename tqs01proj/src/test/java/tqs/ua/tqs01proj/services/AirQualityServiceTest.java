@@ -23,7 +23,10 @@ import tqs.ua.tqs01proj.utils.Api02MainResponse;
 import tqs.ua.tqs01proj.utils.ExternalCaller;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 // https://stackoverflow.com/questions/40961057/how-to-use-mockito-with-junit5
 @ExtendWith(MockitoExtension.class)
@@ -161,5 +164,15 @@ class AirQualityServiceTest {
 
         Assertions.assertThatThrownBy( () -> { surAirQualityService.getAirQuality(non_existing_city); } )
                 .isInstanceOf(AirQualityNull.class);
+    }
+
+    @Test
+    public void getStats_returnsStats(){
+        List<Integer> integerList = new ArrayList<>(Arrays.asList(1,2,3));
+        given (airQualityRepository.getStats()).willReturn(
+                integerList
+        );
+
+        Assertions.assertThat(airQualityRepository.getStats()).containsExactly(1,2,3);
     }
 }
