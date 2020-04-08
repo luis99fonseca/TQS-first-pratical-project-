@@ -5,7 +5,7 @@ name: Java CI with Maven for IT
 
 on:
   schedule:
-    - cron: '59 * * * *'
+    - cron: '5 * * * *'
   push:
     branches: [ master , noRepository]
   pull_request:
