@@ -48,7 +48,7 @@ public class AirQualityService {
         if (response01.getError() != null){
             System.out.println("Couldn't get data from API01. Cause: " + response01.getError().getDescription());
             response02 = externalCaller.getFromApiTwo(place);
-            System.out.println(">>> " + response02.getAllPollutants());
+
             // TODO: converter pa upg3 https://www2.dmu.dk/AtmosphericEnvironment/Expost/database/docs/PPM_conversion.pdf
             if (response02.getError() != null){
                 System.out.println("Couldn't get data from API02. Cause: " + response02.getError().getDetail());
@@ -61,7 +61,7 @@ public class AirQualityService {
             for (Api02MainResponse.Api02Data.Api02Pollutants.Api02Pollutant p : response02.getAllPollutants()){
                 pollutantList.add( new Pollutant(p.getDisplay_name().toLowerCase(), p.getFull_name().toLowerCase(), p.getConcentration().getValue() ) );
             }
-            System.out.println(">>" + response02.getApi02Date());
+          
             working_aq = new AirQuality(place, "portugal", LocalDateTime.parse(response02.getApi02Date().split("Z")[0] ) ,pollutantList);
             airQualityRepository.save(working_aq);
             return working_aq;
