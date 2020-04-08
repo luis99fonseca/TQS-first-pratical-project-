@@ -35,7 +35,6 @@ public class Web02CheckSearchResultIT {
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
   }
 
-  // TODO: port devia ser dinamico
   @Test
   public void test02CheckSearchResult() throws Exception {
     driver.get("http://localhost:" + randomServerPort + "/");
@@ -45,6 +44,8 @@ public class Web02CheckSearchResultIT {
     driver.findElement(By.xpath("//div/h4")).click();
     Assertions.assertThat(driver.findElement(By.xpath("//div/h4")).getText()).contains("for the city of viseu");
 //    assertEquals("Taken at: 2020-04-08T16:00, for the city of viseu", driver.findElement(By.xpath("//div/h4")).getText());
+    System.out.println(">> " + driver.findElement(By.xpath("//div/h4")).getText());
+
   }
 
   @AfterEach
