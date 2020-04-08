@@ -2,14 +2,36 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Portuguese Air Quality</title>
 </head>
 <body>
     <h1 th:text="'Air Quality in Portuguese Cities'"></h1>
 
     <h4>Search:</h4>
-    <input type="text" id="name" placeholder="Name" >
+    <form  th:action="@{/info}"  method="post">
+        <input type="text" name="city_name" th:value="Name" id="name" placeholder="Name"/>
+        <input type="submit" value="Go!"/>
+    </form>
+
+
 
     <h3>Results:</h3>
+    <div th:switch="${airQ}">
+        <h4 th:case="null">None, yet!</h4>
+        <div th:case="*">
+            <h4 th:text="'Taken at: ' + ${airQ.date} + ', for the city of ' + ${airQ.city} "></h4>
+            <table>
+                <th:block th:each="p : ${pollutants}">
+                    <tr>
+                        <td colspan="2" th:text="${p.type}"></td>
+                        <td th:text="${p.name}"></td>
+                        <td th:text="${p.valueUGM3}"></td>
+                    </tr>
+                </th:block>
+            </table>
+        </div>
+    </div >
+
+
 </body>
 </html>

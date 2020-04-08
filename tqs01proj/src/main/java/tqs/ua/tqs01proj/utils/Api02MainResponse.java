@@ -27,7 +27,7 @@ public class Api02MainResponse {
     }
 
     public String getApi02Date(){
-        return "";
+        return this.getData().datetime;
     }
 
     public static class Api02Data {

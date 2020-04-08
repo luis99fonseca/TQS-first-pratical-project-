@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import tqs.ua.tqs01proj.entities.AirQuality;
 import tqs.ua.tqs01proj.services.AirQualityService;
 
+import java.time.LocalDateTime;
+import java.util.Collections;
+
 @Controller
 public class AirQualityController {
 
@@ -19,20 +22,31 @@ public class AirQualityController {
     // TODO: eventualmente mudar (e ver testes)
     //     private AirQuality getAirQuality(@RequestParam(value = "city", required = true) String city)
     // https://javarevisited.blogspot.com/2017/08/difference-between-restcontroller-and-controller-annotations-spring-mvc-rest.html
+    // TODO: teste para .lowercase()?
     @GetMapping("/airquality/{city}")
     @ResponseBody
     private AirQuality getAirQuality(@PathVariable String city){
 
 //        return new AirQuality("cepoes", "portugal");
-        return airQualityService.getAirQuality(city);
+        return airQualityService.getAirQuality(city.toLowerCase());
     }
 
     @RequestMapping("/index")
     private String frontPage(Model model){
-        AirQuality aq = getAirQuality("viseu");
-        model.addAttribute("messagem", aq.getPollutants());
+        model.addAttribute("airQ", null);
+        model.addAttribute("pollutants", null );
         return "index";
     }
+
+    @RequestMapping(value = "/info", method = RequestMethod.POST)
+    private String frontPageResults(@RequestParam(name = "city_name") String city_name, Model model){
+        AirQuality airQuality = airQualityService.getAirQuality(city_name);
+        model.addAttribute("airQ", airQuality);
+        model.addAttribute("pollutants", airQuality.getPollutants() );
+        return "index";
+    }
+
+
 
     // TODO: por to get stats do Rep
 

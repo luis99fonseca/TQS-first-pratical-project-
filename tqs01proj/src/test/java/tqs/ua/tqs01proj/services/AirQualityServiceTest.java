@@ -118,7 +118,6 @@ class AirQualityServiceTest {
         given( externalCaller.getFromApiTwo( anyString() )  )
                 .willReturn( temp_main02 );
 
-
         AirQuality temp_airQuality = surAirQualityService.getAirQuality("viseu");
         Assertions.assertThat( temp_airQuality.getCity()).isEqualTo("unavailable") ;
     }
