@@ -20,4 +20,4 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      run: cd tqs01proj/ && mvn verify
+      run: cd tqs01proj/ && mvn test
