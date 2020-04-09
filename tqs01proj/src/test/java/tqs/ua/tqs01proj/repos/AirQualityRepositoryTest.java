@@ -85,4 +85,43 @@ class AirQualityRepositoryTest {
         Assertions.assertThat(from_rep.getCountry()).isEqualTo("spain");
     }
 
+    @Test
+    public void checkStatsList_whenOnlySavingNewAQ(){
+        airQualityRepository.save(new AirQuality("aq1", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
+        airQualityRepository.save(new AirQuality("aq2", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
+        airQualityRepository.save(new AirQuality("aq3", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
+
+        Assertions.assertThat(airQualityRepository.getStats()).containsExactly(0, 0, 0);
+    }
+
+    @Test
+    public void checkStatsList_whenSavingExistingAQ(){
+        // thus, checking falseHits
+        airQualityRepository.save(new AirQuality("aq1", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
+        airQualityRepository.save(new AirQuality("aq2", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
+        airQualityRepository.save(new AirQuality("aq3", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
+        airQualityRepository.save(new AirQuality("aq1", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
+        airQualityRepository.save(new AirQuality("aq3", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
+
+        Assertions.assertThat(airQualityRepository.getStats()).containsExactly(0, 0, 2);
+    }
+
+    @Test
+    public void checkStatsList_whenGettingNoExistingAQ(){
+        // thus, checking misses
+        airQualityRepository.findByCityName("no_city1");
+        airQualityRepository.findByCityName("no_city2");
+        airQualityRepository.findByCityName("no_city3");
+
+        Assertions.assertThat(airQualityRepository.getStats()).containsExactly(0, 3, 0);
+    }
+
+    @Test
+    public void checkStatsList_whenGettingExisting_ThenReplaceIt(){
+        airQualityRepository.save(new AirQuality("aq1", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
+        airQualityRepository.findByCityName("aq1");
+        airQualityRepository.save(new AirQuality("aq1", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
+
+        Assertions.assertThat(airQualityRepository.getStats()).containsExactly(1,0,1);
+    }
 }

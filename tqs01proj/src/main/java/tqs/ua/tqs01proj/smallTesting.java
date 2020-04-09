@@ -36,7 +36,8 @@ public class smallTesting {
         ola.add(new AirQuality("aq1", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
         ola.add(new AirQuality("aq2", "portugal",  LocalDateTime.parse("2010-04-28T22:32:38.536"), Collections.emptyList() ));
 
-        ola.remove(new AirQuality("aq1", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
+        boolean b = ola.remove( null );
+        System.out.println("TURE: " + b);
         System.out.println(ola);
 
         String instantatual = "2014-12-22T10:15:30Z";

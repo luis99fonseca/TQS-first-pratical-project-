@@ -79,7 +79,11 @@ public class AirQualityRepository {
         return this.table.remove(temp_airquality);
     }
 
-    public boolean removeOldest(){
+    public void deleteAll(){
+        this.table = new ArrayList<>();
+    }
+
+    private boolean removeOldest(){
         AirQuality temp_airquality = this.table.get(0);
         for (AirQuality aq : this.table){
             if (temp_airquality.getDate().isAfter(aq.getDate())){

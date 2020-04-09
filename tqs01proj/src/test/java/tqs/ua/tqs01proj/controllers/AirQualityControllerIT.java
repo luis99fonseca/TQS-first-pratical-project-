@@ -46,7 +46,7 @@ class AirQualityControllerIT {
 
     // TODO: decidir what do here.. tem de tar de acorod com o de sevice
     @Test
-    public void whenGetAirQByInexistingCity_thenReturnAirQ() throws Exception {
+    public void whenGetAirQByInexistingCity_thenReturnNullAirQ() throws Exception {
         String non_existing_city = "no_city";
 
         given( airQualityService.getAirQuality( non_existing_city )).willThrow(

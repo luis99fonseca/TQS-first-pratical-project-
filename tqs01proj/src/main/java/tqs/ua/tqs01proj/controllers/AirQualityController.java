@@ -20,15 +20,11 @@ public class AirQualityController {
     @Autowired
     private AirQualityService airQualityService;
 
-    // TODO: eventualmente mudar (e ver testes)
-    //     private AirQuality getAirQuality(@RequestParam(value = "city", required = true) String city)
     // https://javarevisited.blogspot.com/2017/08/difference-between-restcontroller-and-controller-annotations-spring-mvc-rest.html
     // TODO: teste para .lowercase()?
     @GetMapping("/airquality/{city}")
     @ResponseBody
     private AirQuality getAirQuality(@PathVariable String city){
-
-//        return new AirQuality("cepoes", "portugal");
         return airQualityService.getAirQuality(city);
     }
 
