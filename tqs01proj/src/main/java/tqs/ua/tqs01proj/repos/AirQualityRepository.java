@@ -80,8 +80,11 @@ public class AirQualityRepository {
         return this.table.remove(temp_airquality);
     }
 
-    public void deleteAll(){
+    public void resetCache(){
         this.table = new ArrayList<>();
+        this.hits = 0;
+        this.misses = 0;
+        this.falseHits = 0;
     }
 
     private boolean removeOldest(){

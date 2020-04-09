@@ -1,7 +1,6 @@
 package tqs.ua.tqs01proj.integration;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -31,7 +30,7 @@ public class AirQualityRestControllerIT {
 
     @AfterEach
     public void resetCache(){
-        airQualityRepository.deleteAll();
+        airQualityRepository.resetCache();
     }
 
     @Test
