@@ -38,7 +38,8 @@ public class AirQualityRepository {
     public List<Integer> getStats(){
         return new ArrayList<>(
                 Arrays.asList(
-                        this.hits,
+                        this.hits - this.falseHits, // Note: Because in this case scenarios, one can only save after
+                        // checking its in but antique
                         this.misses,
                         this.falseHits
                 )

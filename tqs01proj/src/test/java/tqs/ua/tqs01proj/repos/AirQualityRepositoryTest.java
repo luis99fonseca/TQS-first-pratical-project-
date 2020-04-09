@@ -95,11 +95,14 @@ class AirQualityRepositoryTest {
     }
 
     @Test
-    public void checkStatsList_whenSavingExistingAQ(){
+    public void checkStatsList_whenSavingExistingAntiqueAQ(){
         // thus, checking falseHits
         airQualityRepository.save(new AirQuality("aq1", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
         airQualityRepository.save(new AirQuality("aq2", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
         airQualityRepository.save(new AirQuality("aq3", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
+
+        airQualityRepository.findByCityName("aq1");
+        airQualityRepository.findByCityName("aq3");
         airQualityRepository.save(new AirQuality("aq1", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
         airQualityRepository.save(new AirQuality("aq3", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
 
@@ -117,11 +120,10 @@ class AirQualityRepositoryTest {
     }
 
     @Test
-    public void checkStatsList_whenGettingExisting_ThenReplaceIt(){
+    public void checkStatsList_whenGettingExisting(){
         airQualityRepository.save(new AirQuality("aq1", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
         airQualityRepository.findByCityName("aq1");
-        airQualityRepository.save(new AirQuality("aq1", "portugal",  LocalDateTime.parse("2019-04-28T22:32:38.536"), Collections.emptyList() ));
 
-        Assertions.assertThat(airQualityRepository.getStats()).containsExactly(1,0,1);
+        Assertions.assertThat(airQualityRepository.getStats()).containsExactly(1,0,0);
     }
 }

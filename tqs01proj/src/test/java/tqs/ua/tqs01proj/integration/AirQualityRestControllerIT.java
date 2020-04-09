@@ -65,6 +65,7 @@ public class AirQualityRestControllerIT {
 //    }
     @Test
     public void whenGetStats_afterGetAirQByCity_thenReturnStats() throws Exception {
+        // checking correct hit
         String city_name = "viseu";
         createAQEntry(city_name);
 
@@ -85,9 +86,98 @@ public class AirQualityRestControllerIT {
 
     }
 
+    @Test
+    public void whenGetStats_afterGetAirQByInexistingCity_thenReturnStats() throws Exception {
+        // checking correct misses
+        String city_name = "viseu";
+
+        mvc.perform(get("/airquality/"+city_name).contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+
+        mvc.perform(get("/airquality/"+city_name+"2").contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+
+
+        mvc.perform(get("/airquality/stats").contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$[0]").value(0))
+                .andExpect(jsonPath("$[1]").value(2))
+                .andExpect(jsonPath("$[2]").value(0))
+        ;
+    }
+
+    @Test
+    public void whenGetStats_afterGetAirQByAntiqueCity_thenReturnStats() throws Exception {
+        // checking correct falseHits
+        String city_name = "viseu";
+        createAQEntry(city_name, LocalDateTime.now().plusMinutes(-51) );
+
+        mvc.perform(get("/airquality/"+city_name).contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+
+
+        mvc.perform(get("/airquality/stats").contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$[0]").value(0))
+                .andExpect(jsonPath("$[1]").value(0))
+                .andExpect(jsonPath("$[2]").value(1))
+        ;
+    }
+
+    @Test
+    public void whenGetStats_afterAllCases_thenReturnStats() throws Exception {
+        // checking correct hits, misses and falseHits
+        String antique_city = "viseu";
+        String updated_city = "aveiro";
+        String noExisting_city = "porto";
+
+        createAQEntry(antique_city, LocalDateTime.now().plusMinutes(-51) );
+        createAQEntry(updated_city);
+
+        mvc.perform(get("/airquality/"+antique_city).contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+
+        mvc.perform(get("/airquality/"+updated_city).contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+
+        mvc.perform(get("/airquality/"+noExisting_city).contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+
+        mvc.perform(get("/airquality/stats").contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$[0]").value(1))
+                .andExpect(jsonPath("$[1]").value(1))
+                .andExpect(jsonPath("$[2]").value(1))
+        ;
+    }
 
     private void createAQEntry(String name){
         airQualityRepository.save(new AirQuality(name, "portugal",  LocalDateTime.now(), Collections.emptyList() ));
+    }
+
+    private void createAQEntry(String name, LocalDateTime date){
+        airQualityRepository.save(new AirQuality(name, "portugal",  date, Collections.emptyList() ));
     }
 
 }
