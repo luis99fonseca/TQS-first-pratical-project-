@@ -152,20 +152,6 @@ class AirQualityServiceTest {
     }
 
 
-    // TODO: ver se em vez de Exception, se é Null Object
-    // TODO: also na pratica nao usa este objeto at all... acho que em cima ja faço isso
-    //
-    @Test
-    public void getAirQDetails_whenDoesntExist_returnsException(){
-        String non_existing_city = "no_city";
-
-        given( airQualityRepository.findByCityName(non_existing_city) ).
-                willThrow(new AirQualityNull());
-
-        Assertions.assertThatThrownBy( () -> { surAirQualityService.getAirQuality(non_existing_city); } )
-                .isInstanceOf(AirQualityNull.class);
-    }
-
     @Test
     public void getStats_returnsStats(){
         List<Integer> integerList = new ArrayList<>(Arrays.asList(1,2,3));

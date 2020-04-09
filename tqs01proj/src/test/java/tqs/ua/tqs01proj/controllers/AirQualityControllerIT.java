@@ -49,15 +49,14 @@ class AirQualityControllerIT {
     public void whenGetAirQByInexistingCity_thenReturnNullAirQ() throws Exception {
         String non_existing_city = "no_city";
 
-        given( airQualityService.getAirQuality( non_existing_city )).willThrow(
+        given( airQualityService.getAirQuality( non_existing_city )).willReturn(
                 new AirQualityNull()
         );
 
-        servlet.perform(MockMvcRequestBuilders.get("/airquality/".concat(non_existing_city))).
-                andExpect(status().isNotFound())
-                // TODO: ver se meto a ver que city é null :L
-                //.andExpect(jsonPath("city").value("viseu"))
-        ;
+        servlet.perform(MockMvcRequestBuilders.get("/airquality/".concat(non_existing_city)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("city").value("unavailable"))
+                .andExpect(jsonPath("pollutants").isEmpty());
     }
 
     @Test

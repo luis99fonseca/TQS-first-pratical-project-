@@ -14,6 +14,24 @@ public class ConfigProperties {
     private String url01;
     private String url02;
     private String secret02;
+    private String url03;
+    private String secret03;
+
+    public String getUrl03() {
+        return url03;
+    }
+
+    public String getSecret03() {
+        return secret03;
+    }
+
+    public void setUrl03(String url03) {
+        this.url03 = url03;
+    }
+
+    public void setSecret03(String secret03) {
+        this.secret03 = secret03;
+    }
 
     public String getUrl02() {
         return url02;

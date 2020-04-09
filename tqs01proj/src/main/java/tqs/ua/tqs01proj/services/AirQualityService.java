@@ -2,6 +2,7 @@ package tqs.ua.tqs01proj.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tqs.ua.tqs01proj.entities.AirQualityNull;
 import tqs.ua.tqs01proj.entities.Pollutant;
 import tqs.ua.tqs01proj.utils.Api02MainResponse;
 import tqs.ua.tqs01proj.entities.AirQuality;
@@ -56,7 +57,7 @@ public class AirQualityService {
                 System.out.println("Couldn't get data from API02. Cause: " + response02.getError().getDetail());
 
                 // If both API's requests have problems, send Null Object
-                return new AirQuality("unavailable", "unavailable", localDateTime, pollutantList );
+                return new AirQualityNull();
             }
 
             // If API01 request doesn't work, but API02 does, use it
