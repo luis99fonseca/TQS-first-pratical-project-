@@ -19,10 +19,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import tqs.ua.tqs01proj.Tqs01projApplication;
 
 // https://stackoverflow.com/a/57682748
-
-//@WebAppConfiguration
-//@SpringBootTest(value = "server.port=8091", classes = Tqs01projApplication.class)
-//@RunWith(SpringRunner.class)
+// https://stackoverflow.com/a/38894869
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class Web01CheckNoSearchYetIT {
     private WebDriver driver;
@@ -35,6 +32,7 @@ public class Web01CheckNoSearchYetIT {
 
     @BeforeEach
     public void setUp() throws Exception {
+        // https://chromedriver.chromium.org/capabilities
         ChromeOptions opt = new ChromeOptions();
         opt.setHeadless(true);
         driver = new ChromeDriver(opt);
@@ -43,7 +41,6 @@ public class Web01CheckNoSearchYetIT {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
-    // TODO: port devia ser dinamico
     @Test
     public void test01CheckNoSearchYet() throws Exception {
         driver.get("http://localhost:" + randomServerPort + "/");
