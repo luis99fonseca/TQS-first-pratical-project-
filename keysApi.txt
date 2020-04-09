@@ -10,3 +10,6 @@ de6ba8ac858e40a881a94fd8747e93f4
 
 ## 3 airvisual
 de701122-0593-4fa3-acdf-e101b4bbc00c
+
+## opencagedata
+632e3789f4f447b0acd9480df8f66d3b
