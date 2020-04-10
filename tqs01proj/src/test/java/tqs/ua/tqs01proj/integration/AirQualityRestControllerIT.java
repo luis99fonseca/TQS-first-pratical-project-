@@ -42,26 +42,24 @@ public class AirQualityRestControllerIT {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.city").exists()) // replaced .value, as it could return unavailable,
+                .andExpect(jsonPath("$.city").value(city_name))
                 // giving false error, when working as intended
                 .andExpect(jsonPath("$.pollutants").isArray())
         ;
     }
 
-    // TODO: por causa da 2a API, vai dar smp alguma coisa
-//    @Test
-//    public void whenGetAirQByInexistingCity_thenReturnNullAirQ() throws Exception {
-//        String city_name = "viseu";
-//        createAQEntry(city_name);
-//
-//        mvc.perform(get("/airquality/"+city_name).contentType(MediaType.APPLICATION_JSON))
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-//                .andExpect(jsonPath("$.city").value(city_name))
-//                .andExpect(jsonPath("$.pollutants").isArray())
-//        ;
-//    }
+    @Test
+    public void whenGetAirQByInexistingCity_thenReturnNullAirQ() throws Exception {
+        String no_existing_city = "no_city";
+
+        mvc.perform(get("/airquality/"+no_existing_city).contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.city").value("unavailable"))
+                .andExpect(jsonPath("$.pollutants").isArray())
+        ;
+    }
     @Test
     public void whenGetStats_afterGetAirQByCity_thenReturnStats() throws Exception {
         // checking correct hit
@@ -95,7 +93,7 @@ public class AirQualityRestControllerIT {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
 
-        mvc.perform(get("/airquality/"+city_name+"2").contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(get("/airquality/"+city_name+"two").contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
@@ -168,6 +166,21 @@ public class AirQualityRestControllerIT {
                 .andExpect(jsonPath("$[0]").value(1))
                 .andExpect(jsonPath("$[1]").value(1))
                 .andExpect(jsonPath("$[2]").value(1))
+        ;
+    }
+
+    @Test
+    public void whenGetIncorrectInputCity_tryReturnClosestMatch() throws Exception {
+        String city_name = "viseu";
+        createAQEntry(city_name);
+
+        mvc.perform(get("/airquality/"+city_name+"2").contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.city").value("viseu"))
+                // giving false error, when working as intended
+                .andExpect(jsonPath("$.pollutants").isEmpty())
         ;
     }
 

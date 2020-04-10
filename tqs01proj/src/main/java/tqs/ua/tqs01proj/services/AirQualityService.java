@@ -28,7 +28,7 @@ public class AirQualityService {
 
     public AirQuality getAirQuality(String city_name){
         // Can't be done at the Controller, for some reason
-        String place = city_name.toLowerCase();
+        String place = city_name.toLowerCase().replaceAll("\\d","");
         // TODO: (tirar daqui, e possibly meter as singleton como no video do gajo;) plus isto muda os testes... bue
         //      https://www.baeldung.com/spring-5-webclient
         //      https://springframework.guru/spring-5-webclient/ -> testam os endpoints

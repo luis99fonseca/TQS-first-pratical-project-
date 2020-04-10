@@ -45,6 +45,9 @@ public class smallTesting {
         LocalDateTime d6 = LocalDateTime.now().plusMinutes(-50);
         System.out.println(">> " + d6);
         System.out.println(">>> " + Instant.now(clock));
-
+        System.out.println("asdas32sad4dasd".replaceAll("\\d",""));
+        String ola2 = "dqwe23432daws";
+        String adeus = ola2.replaceAll("\\d","");
+        System.out.println(adeus);
     }
 }

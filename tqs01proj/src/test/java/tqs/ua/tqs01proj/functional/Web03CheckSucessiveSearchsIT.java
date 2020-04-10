@@ -17,14 +17,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class Web02CheckSearchResultIT {
+public class Web03CheckSucessiveSearchsIT {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
   private StringBuffer verificationErrors = new StringBuffer();
-
-  @LocalServerPort
-  int randomServerPort;
 
   @BeforeEach
   public void setUp() throws Exception {
@@ -36,16 +33,22 @@ public class Web02CheckSearchResultIT {
   }
 
   @Test
-  public void test02CheckSearchResult() throws Exception {
-    driver.get("http://localhost:" + randomServerPort + "/");
+  public void test03SucessiveSearchs() throws Exception {
+    driver.get("http://localhost:8091/");
     driver.findElement(By.id("name")).clear();
-    driver.findElement(By.id("name")).sendKeys("ViSeU");
+    driver.findElement(By.id("name")).sendKeys("VisEu");
     driver.findElement(By.xpath("//input[@value='Go!']")).click();
-    driver.findElement(By.xpath("//div/h4")).click();
-    Assertions.assertThat(driver.findElement(By.xpath("//div/h4")).getText()).contains("for the city of viseu");
-//    assertEquals("Taken at: 2020-04-08T16:00, for the city of viseu", driver.findElement(By.xpath("//div/h4")).getText());
-//    System.out.println(">> " + driver.findElement(By.xpath("//div/h4")).getText());
-
+    try {
+      Assertions.assertThat(driver.findElement(By.xpath("//div/h4")).getText()).contains("for the city of viseu");
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    driver.findElement(By.xpath("//input[@value='Go!']")).click();
+    try {
+      Assertions.assertThat(driver.findElement(By.xpath("//div/h4")).getText()).contains("for the city of unavailable");
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
   }
 
   @AfterEach

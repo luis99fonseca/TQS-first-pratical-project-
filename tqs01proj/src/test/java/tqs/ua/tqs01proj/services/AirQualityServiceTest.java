@@ -161,4 +161,13 @@ class AirQualityServiceTest {
 
         Assertions.assertThat(airQualityRepository.getStats()).containsExactly(1,2,3);
     }
+
+    @Test
+    public void givenIncorrectInputCity_tryReturnClosestMatch(){
+        given( airQualityRepository.findByCityName("viseu") ).
+                willReturn(new AirQuality("viseu", "portugal", LocalDateTime.now(), Collections.emptyList() ));
+
+        AirQuality temp_airQuality = surAirQualityService.getAirQuality("vis3eu");
+        Assertions.assertThat( temp_airQuality.getCity()).isEqualTo("viseu") ;
+    }
 }
