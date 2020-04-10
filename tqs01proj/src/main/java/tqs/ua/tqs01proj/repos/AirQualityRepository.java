@@ -62,7 +62,6 @@ public class AirQualityRepository {
     public AirQuality findByCityName(String city){
         for (AirQuality aq : this.table){
             if (aq.getCity().equals(city)){
-//                System.out.println("Em Cache!");
                 this.hits++;
                 return aq;
             }

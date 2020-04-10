@@ -23,6 +23,9 @@ public class Web03CheckSucessiveSearchsIT {
   private boolean acceptNextAlert = true;
   private StringBuffer verificationErrors = new StringBuffer();
 
+  @LocalServerPort
+  int randomServerPort;
+
   @BeforeEach
   public void setUp() throws Exception {
     ChromeOptions opt = new ChromeOptions();
@@ -34,7 +37,7 @@ public class Web03CheckSucessiveSearchsIT {
 
   @Test
   public void test03SucessiveSearchs() throws Exception {
-    driver.get("http://localhost:8091/");
+    driver.get("http://localhost:" + randomServerPort + "/");
     driver.findElement(By.id("name")).clear();
     driver.findElement(By.id("name")).sendKeys("VisEu");
     driver.findElement(By.xpath("//input[@value='Go!']")).click();

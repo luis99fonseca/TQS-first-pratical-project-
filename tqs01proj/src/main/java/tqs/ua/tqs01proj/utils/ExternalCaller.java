@@ -39,7 +39,6 @@ public class ExternalCaller {
                 .block();
     }
 
-    // TODO: conseguir ao mandar localizaçao mal :D
     public Api02MainResponse getFromApiTwo(String city){
         if (!this.geoMappings.containsKey(city)){
             Api03MainResponse api03MainResponse = webClientBuilder

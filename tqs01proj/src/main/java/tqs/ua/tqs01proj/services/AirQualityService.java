@@ -26,9 +26,9 @@ public class AirQualityService {
     private ExternalCaller externalCaller;
 
 
-    public AirQuality getAirQuality(String city_name){
+    public AirQuality getAirQuality(String cityName){
         // Can't be done at the Controller, for some reason
-        String place = city_name.toLowerCase().replaceAll("\\d","");
+        String place = cityName.toLowerCase().replaceAll("\\d","");
         // TODO: (tirar daqui, e possibly meter as singleton como no video do gajo;) plus isto muda os testes... bue
         //      https://www.baeldung.com/spring-5-webclient
         //      https://springframework.guru/spring-5-webclient/ -> testam os endpoints
@@ -44,9 +44,7 @@ public class AirQualityService {
         Api01MainResponse response01 = externalCaller.getFromApiOne(place);
         Api02MainResponse response02 = null;
 
-        // those are instantiated for the purposes of Null Object Pattern, aka not returning null elements;
         List<Pollutant> pollutantList = new ArrayList<>();
-        LocalDateTime localDateTime = LocalDateTime.now();
 
         if (response01.getError() != null){
             System.out.println("Couldn't get data from API01. Cause: " + response01.getError().getDescription());

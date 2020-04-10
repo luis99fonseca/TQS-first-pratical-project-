@@ -25,7 +25,7 @@ public class Api03MainResponse {
     }
 
     public Api03MainResponse.Api03Result.Api03Geometry getCords(){
-        return this.results.size() > 0 ? this.results.get(0).getGeometry() : null;
+        return !this.results.isEmpty() ? this.results.get(0).getGeometry() : null;
     }
 
 
