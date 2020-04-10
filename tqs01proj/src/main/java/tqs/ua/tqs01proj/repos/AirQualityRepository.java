@@ -71,13 +71,13 @@ public class AirQualityRepository {
     }
 
     public boolean removeByCityName(String name){
-        AirQuality temp_airquality = null;
+        AirQuality tempAirQuality = null;
         for (AirQuality aq : this.table){
             if (aq.getCity().equals(name)){
-                temp_airquality = aq;
+                tempAirQuality = aq;
             }
         }
-        return this.table.remove(temp_airquality);
+        return this.table.remove(tempAirQuality);
     }
 
     public void resetCache(){
@@ -88,18 +88,18 @@ public class AirQualityRepository {
     }
 
     private boolean removeOldest(){
-        AirQuality temp_airquality = this.table.get(0);
+        AirQuality tempAirQuality = this.table.get(0);
         for (AirQuality aq : this.table){
-            if (temp_airquality.getDate().isAfter(aq.getDate())){
-                temp_airquality = aq;
+            if (tempAirQuality.getDate().isAfter(aq.getDate())){
+                tempAirQuality = aq;
             }
         }
-        return this.table.remove(temp_airquality);
+        return this.table.remove(tempAirQuality);
     }
 
-    private AirQuality checkByCityName(String city_name){
+    private AirQuality checkByCityName(String cityName){
         for (AirQuality aq : this.table){
-            if (aq.getCity().equals(city_name)){
+            if (aq.getCity().equals(cityName)){
                 return aq;
             }
         }

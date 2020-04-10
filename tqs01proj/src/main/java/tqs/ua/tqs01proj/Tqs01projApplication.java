@@ -12,7 +12,7 @@ public class Tqs01projApplication {
 	public WebClient.Builder getWebClientBuilder(){
 		return WebClient.builder();
 	}
-
+	// https://stackoverflow.com/questions/57809861/sonarqube-rule-using-command-line-arguments-is-security-sensitive-in-spring-b
 	public static void main(String[] args) {
 		SpringApplication.run(Tqs01projApplication.class, args);
 	}

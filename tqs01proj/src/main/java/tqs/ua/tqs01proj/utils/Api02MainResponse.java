@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-// TODO: por atributos privados :) ou tirar os Getters, pa ficar more POJO like? embora conflita pk precisamos de algumas funçoes especificas e preciamso
 public class Api02MainResponse {
 
-    public Api02Error error;
-    public Api02Data data;
+    private Api02Error error;
+    private Api02Data data;
 
     public Api02Error getError() {
         return error;
@@ -31,8 +30,8 @@ public class Api02MainResponse {
     }
 
     public static class Api02Data {
-        public String datetime;
-        public Api02Pollutants pollutants;
+        private String datetime;
+        private Api02Pollutants pollutants;
 
         public String getDatetime() {
             return datetime;
@@ -43,11 +42,11 @@ public class Api02MainResponse {
         }
 
         public static class Api02Pollutants {
-            public Api02Pollutant co;
-            public Api02Pollutant no2;
-            public Api02Pollutant o3;
-            public Api02Pollutant pm10;
-            public Api02Pollutant so2;
+            private Api02Pollutant co;
+            private Api02Pollutant no2;
+            private Api02Pollutant o3;
+            private Api02Pollutant pm10;
+            private Api02Pollutant so2;
 
             public List<Api02Pollutant> getListPollutants(){
                 return new ArrayList<>(Arrays.asList(
@@ -60,9 +59,9 @@ public class Api02MainResponse {
             }
 
             public static class Api02Pollutant {
-                public String display_name;
-                public String full_name;
-                public Api02Concentration concentration;
+                private String display_name;
+                private String full_name;
+                private Api02Concentration concentration;
 
                 public String getDisplay_name() {
                     return display_name;
@@ -77,8 +76,8 @@ public class Api02MainResponse {
                 }
 
                 public static class Api02Concentration {
-                    public float value;
-                    public String units;
+                    private float value;
+                    private String units;
 
                     public float getValue() {
                         return value;

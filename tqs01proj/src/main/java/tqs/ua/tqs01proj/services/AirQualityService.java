@@ -29,16 +29,13 @@ public class AirQualityService {
     public AirQuality getAirQuality(String cityName){
         // Can't be done at the Controller, for some reason
         String place = cityName.toLowerCase().replaceAll("\\d","");
-        // TODO: (tirar daqui, e possibly meter as singleton como no video do gajo;) plus isto muda os testes... bue
         //      https://www.baeldung.com/spring-5-webclient
         //      https://springframework.guru/spring-5-webclient/ -> testam os endpoints
         // TODO: https://stackoverflow.com/questions/60289283/webclient-map-nested-object -> passar pa objetos
         //  dizer que é melhor que RestTemplate que vai tar decrepeat
-        AirQuality working_aq = airQualityRepository.findByCityName(place);
-        if (working_aq != null){
-            if ( ChronoUnit.MINUTES.between(working_aq.getDate(), LocalDateTime.now()) < 50 ){
-                return working_aq;
-            }
+        AirQuality workingAQ = airQualityRepository.findByCityName(place);
+        if (workingAQ != null && (ChronoUnit.MINUTES.between(workingAQ.getDate(), LocalDateTime.now()) < 50)){
+            return workingAQ;
         }
 
         Api01MainResponse response01 = externalCaller.getFromApiOne(place);
@@ -63,19 +60,19 @@ public class AirQualityService {
                 pollutantList.add( new Pollutant(p.getDisplay_name().toLowerCase(), p.getFull_name().toLowerCase(), p.getConcentration().getValue() ) );
             }
 
-            working_aq = new AirQuality(place, "portugal", LocalDateTime.parse(response02.getApi02Date().split("Z")[0] ) ,pollutantList);
-            airQualityRepository.save(working_aq);
-            return working_aq;
+            workingAQ = new AirQuality(place, "portugal", LocalDateTime.parse(response02.getApi02Date().split("Z")[0] ) ,pollutantList);
+            airQualityRepository.save(workingAQ);
+            return workingAQ;
         }
 
         // If API01 request works, use it
         for (Api01MainResponse.Api01Response.Api01Periods.Api01Pollutant p: response01.getAllPollutants()){
             pollutantList.add( new Pollutant(p.getType(), p.getName(), p.getValueUGM3() ));
         }
-        working_aq = new AirQuality(place, "portugal", LocalDateTime.parse(response01.getApi01Date().split("\\+")[0])  ,pollutantList);
-        airQualityRepository.save(working_aq);
-        return working_aq;
-    };
+        workingAQ = new AirQuality(place, "portugal", LocalDateTime.parse(response01.getApi01Date().split("\\+")[0])  ,pollutantList);
+        airQualityRepository.save(workingAQ);
+        return workingAQ;
+    }
 
     public List<Integer> getStats() {
         return airQualityRepository.getStats();
