@@ -10,7 +10,7 @@ on:
     branches: [ master, noRepository ]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
     steps:
