@@ -17,7 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class Web04CheckNoExistingCityIT {
+public class Web04CheckNoExistingCitySearchIT {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
