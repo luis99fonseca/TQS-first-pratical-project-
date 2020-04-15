@@ -52,7 +52,7 @@ public class AirQualityRestControllerTemplateIT {
 
     @Test
     public void whenGetAirQByInexistingCity_thenReturnNullAirQ() throws Exception {
-        String no_existing_city = "no_city";
+        String no_existing_city = "invalidcity";
 
         AirQuality airQuality = webTestClient
                 .get()

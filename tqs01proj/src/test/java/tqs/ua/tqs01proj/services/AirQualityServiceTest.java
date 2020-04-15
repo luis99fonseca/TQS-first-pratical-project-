@@ -125,9 +125,6 @@ class AirQualityServiceTest {
         Assertions.assertThat( temp_airQuality.getCity()).isEqualTo("unavailable") ;
     }
 
-    // TODO: Dizer que se tentou dar override no system time mas not worth it. Embora s e sinta que testes como este
-    //  nao sejam otimos .now() assim aqui, neste contexto serve para dar o timetravvel desejado
-    //  e que fiz o que faria e a cache tivesse TTL no fim...
     //https://www.baeldung.com/java-override-system-time
     @Test
     public void givenAQInRepository_butOutdated_thenRequestNew(){

@@ -50,7 +50,7 @@ public class AirQualityRestControllerIT {
 
     @Test
     public void whenGetAirQByInexistingCity_thenReturnNullAirQ() throws Exception {
-        String no_existing_city = "no_city";
+        String no_existing_city = "invalidcity";
 
         mvc.perform(get("/airquality/"+no_existing_city).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
