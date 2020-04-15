@@ -13,7 +13,7 @@ on:
     branches: [ master , noRepository]
 
 jobs:
-  build:
+  i-test:
 
     runs-on: ubuntu-latest
 
@@ -23,6 +23,6 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Build with Maven
+    - name: Integration Testing
       run: cd tqs01proj/ && mvn package failsafe:integration-test
 
