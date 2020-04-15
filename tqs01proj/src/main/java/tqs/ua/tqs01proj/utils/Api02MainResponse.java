@@ -22,7 +22,7 @@ public class Api02MainResponse {
     }
 
     public List<Api02Data.Api02Pollutants.Api02Pollutant> getAllPollutants(){
-        return getData().getPollutants().getListPollutants();
+        return this.getData().getPollutants().getListPollutants();
     }
 
     public String getApi02Date(){
@@ -38,23 +38,24 @@ public class Api02MainResponse {
         }
 
         public Api02Pollutants getPollutants() {
-            return pollutants;
+            return this.pollutants;
         }
 
         public static class Api02Pollutants {
-            private Api02Pollutant co;
-            private Api02Pollutant no2;
-            private Api02Pollutant o3;
-            private Api02Pollutant pm10;
-            private Api02Pollutant so2;
+            // must be public to work
+            public Api02Pollutant co;
+            public Api02Pollutant no2;
+            public Api02Pollutant o3;
+            public Api02Pollutant pm10;
+            public Api02Pollutant so2;
 
             public List<Api02Pollutant> getListPollutants(){
                 return new ArrayList<>(Arrays.asList(
-                        co,
-                        no2,
-                        o3,
-                        pm10,
-                        so2
+                        this.co,
+                        this.no2,
+                        this.o3,
+                        this.pm10,
+                        this.so2
                 ));
             }
 

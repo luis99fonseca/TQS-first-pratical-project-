@@ -47,7 +47,6 @@ public class AirQualityService {
             System.out.println("Couldn't get data from API01. Cause: " + response01.getError().getDescription());
             response02 = externalCaller.getFromApiTwo(place);
 
-            // TODO: converter pa upg3 https://www2.dmu.dk/AtmosphericEnvironment/Expost/database/docs/PPM_conversion.pdf
             if (response02.getError() != null){
                 System.out.println("Couldn't get data from API02. Cause: " + response02.getError().getDetail());
 
@@ -57,7 +56,7 @@ public class AirQualityService {
 
             // If API01 request doesn't work, but API02 does, use it
             for (Api02MainResponse.Api02Data.Api02Pollutants.Api02Pollutant p : response02.getAllPollutants()){
-                pollutantList.add( new Pollutant(p.getDisplay_name().toLowerCase(), p.getFull_name().toLowerCase(), p.getConcentration().getValue() ) );
+                pollutantList.add( new Pollutant(p.getDisplay_name().toLowerCase(), p.getFull_name().toLowerCase(), p.getConcentration().getValue() ,p.getConcentration().getUnits()) );
             }
 
             workingAQ = new AirQuality(place, "portugal", LocalDateTime.parse(response02.getApi02Date().split("Z")[0] ) ,pollutantList);
@@ -67,7 +66,7 @@ public class AirQualityService {
 
         // If API01 request works, use it
         for (Api01MainResponse.Api01Response.Api01Periods.Api01Pollutant p: response01.getAllPollutants()){
-            pollutantList.add( new Pollutant(p.getType(), p.getName(), p.getValueUGM3() ));
+            pollutantList.add( new Pollutant(p.getType(), p.getName(), p.getValueUGM3(), "ug/m3" ));
         }
         workingAQ = new AirQuality(place, "portugal", LocalDateTime.parse(response01.getApi01Date().split("\\+")[0])  ,pollutantList);
         airQualityRepository.save(workingAQ);

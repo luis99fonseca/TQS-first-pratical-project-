@@ -9,7 +9,7 @@
 
     <h4>Search:</h4>
     <form  th:action="@{/info}"  method="post">
-        <input type="text" name="city_name" th:value="Name" id="name" pattern="[A-Za-zç]*" title="Letters Only!" placeholder="Name"/>
+        <input type="text" name="city_name" th:value="CityName" id="name" pattern="[A-Za-zç]*" title="Letters Only!" placeholder="Name"/>
         <input type="submit" value="Go!"/>
     </form>
 
@@ -26,6 +26,7 @@
                         <td colspan="2" th:text="${p.type}"></td>
                         <td th:text="${p.name}"></td>
                         <td th:text="${p.valueUGM3}"></td>
+                        <td th:text="${p.unit}"></td>
                     </tr>
                 </th:block>
             </table>

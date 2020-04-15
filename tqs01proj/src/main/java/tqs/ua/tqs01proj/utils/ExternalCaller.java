@@ -72,7 +72,7 @@ public class ExternalCaller {
                     .uri(uriBuilder -> uriBuilder
                             .path("/air-quality/v2/current-conditions")
                             .queryParam("lat", this.geoMappings.get(city).getLat())
-                            .queryParam("lon", this.geoMappings.get(city).getLat())
+                            .queryParam("lon", this.geoMappings.get(city).getLng())
                             .queryParam("key", configProperties.getSecret02())
                             .queryParam("features", "pollutants_concentrations")
                             .build()
